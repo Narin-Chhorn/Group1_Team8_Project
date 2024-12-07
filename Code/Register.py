@@ -22,6 +22,8 @@ class UserRegistrationSystem:
         has_digit = any(char.isdigit() for char in pw)
         has_special = any(char in "!@#$%^&*()_+={}[\\]|\\:;,.<>?" for char in pw)
         
+        # In password condition, if can use the same error message easier and friendly to the users.
+        # And aslo when create code also comment on the code as well for making sure team members can understand your code process!!!!
         if len(pw) < 8:
             return "Your Password should be more than 8 characters."
         if len(pw) >= 8 and not (has_upper and has_digit and has_special):

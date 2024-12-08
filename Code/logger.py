@@ -10,13 +10,13 @@ def main():
             choice=int(input("Enter the number:"))
             if choice == 1 :
                 log_in()
-            elif choice =="2":
+            elif choice == 2 :
                 pass
-            elif choice =="3":
+            elif choice == 3 :
                 pass
-            elif choice =="4":
+            elif choice == 4 :
                 pass
-            elif choice =="5":
+            elif choice == 5 :
                 pass
                 break
             else :

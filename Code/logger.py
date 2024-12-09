@@ -55,7 +55,7 @@ class UserRegistrationSystem:
             
         new_user = Register(username, password, email)
         self.users.append(new_user)
-        print(f"{new_user.username}, {new_user.email}")
+        print(f"Name:{new_user.username},Gmail:{new_user.email}")
         return True
 
     def list_users(self):

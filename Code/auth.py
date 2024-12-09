@@ -1,25 +1,21 @@
-# This will be Authentication code
-from cryptography.fernet import Fernet  # type: ignore
+import hashlib
 
 class Register:
-    key = Fernet.generate_key()
-    cipher = Fernet(key)
-
     def __init__(self, username, password, email):
         self.username = username
-        self.encrypted_password = Register.encrypt_password(password)
+        self.hashed_password = Register.hash_password(password)
         self.email = email
-    ## Use Encrypt to Hide password
-    @staticmethod
-    def encrypt_password(password):
-        """Encrypt a password using AES encryption."""
-        return Register.cipher.encrypt(password.encode())
 
     @staticmethod
-    def decrypt_password(encrypted_password):
-        """Decrypt a password for display or verification."""
-        return Register.cipher.decrypt(encrypted_password).decode()
-    
+    def hash_password(password):
+        """Hash a password using SHA256."""
+        return hashlib.sha256(password.encode()).hexdigest()
+
+    @staticmethod
+    def verify_password(stored_hash, password):
+        """Verify a hashed password."""
+        return stored_hash == hashlib.sha256(password.encode()).hexdigest()
+
     def __str__(self):
         return f"{self.username}, {self.email}"
 
@@ -81,7 +77,7 @@ class UserRegistrationSystem:
         else:
             print("\n--- Registered Users ---")
             for index, user in enumerate(self.users, start=1):
-                print(f"{index}. {user} (Encrypted Password: {user.encrypted_password.decode()})")
+                print(f"{index}. {user} (Hashed Password: {user.hashed_password})")
 
 
 if __name__ == "__main__":

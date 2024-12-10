@@ -3,6 +3,7 @@ import hashlib
 # Function to hash passwords
 def hash_password(password):
     return hashlib.sha256(password.encode()).hexdigest()
+<<<<<<< HEAD
 
 class Register:
     def __init__(self, username, password, email):
@@ -71,6 +72,8 @@ class UserRegistrationSystem:
             print("Registered Users:")
             for user in self.users:
                 print(user)
+=======
+>>>>>>> 6425fdaba5a5fcd7b0f320cf91cea1b74709deea
 
 # User database (in a real-world application, use a secure database)
 users = {
@@ -157,6 +160,7 @@ def menu(username):
             print(f"An unexpected error occurred: {e}")
 
 # Main program
+<<<<<<< HEAD
 def main():
     user_registration_system = UserRegistrationSystem()
     
@@ -179,3 +183,8 @@ def main():
 
 if __name__ == "__main__":
     main()
+=======
+if __name__ == "__main__":
+    logged_in_user = login()  # Ensure login first
+    menu(logged_in_user)      # Show the menu only after successful login
+>>>>>>> 6425fdaba5a5fcd7b0f320cf91cea1b74709deea

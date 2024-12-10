@@ -5,7 +5,7 @@ class Register:
         self.email = email
 
     def __str__(self):
-        return f"{self.username}, {self.email}"
+        return f"Name:{self.username}, Gmail:{self.email}"
 
 class UserRegistrationSystem:
     def __init__(self):

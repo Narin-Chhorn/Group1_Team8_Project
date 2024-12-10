@@ -3,7 +3,6 @@ import hashlib
 # Function to hash passwords
 def hash_password(password):
     return hashlib.sha256(password.encode()).hexdigest()
-<<<<<<< HEAD
 
 class Register:
     def __init__(self, username, password, email):
@@ -72,8 +71,6 @@ class UserRegistrationSystem:
             print("Registered Users:")
             for user in self.users:
                 print(user)
-=======
->>>>>>> 6425fdaba5a5fcd7b0f320cf91cea1b74709deea
 
 # User database (in a real-world application, use a secure database)
 users = {
@@ -160,31 +157,6 @@ def menu(username):
             print(f"An unexpected error occurred: {e}")
 
 # Main program
-<<<<<<< HEAD
-def main():
-    user_registration_system = UserRegistrationSystem()
-    
-    print("Welcome to the User Registration System!")
-    choice = input("Do you want to register (yes/no)? ").strip().lower()
-    
-    if choice == "yes":
-        username = input("Enter a username: ").strip()
-        password = input("Enter a password: ").strip()
-        confirm_password = input("Confirm password: ").strip()
-        email = input("Enter your email: ").strip()
-        
-        if user_registration_system.register_user(username, password, confirm_password, email):
-            print("Registration successful!")
-        else:
-            print("Registration failed.")
-    else:
-        logged_in_user = login()  # Ensure login first
-        menu(logged_in_user)      # Show the menu only after successful login
-
-if __name__ == "__main__":
-    main()
-=======
 if __name__ == "__main__":
     logged_in_user = login()  # Ensure login first
     menu(logged_in_user)      # Show the menu only after successful login
->>>>>>> 6425fdaba5a5fcd7b0f320cf91cea1b74709deea

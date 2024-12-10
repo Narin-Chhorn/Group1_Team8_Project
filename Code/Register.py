@@ -22,6 +22,8 @@ class UserRegistrationSystem:
         has_digit = any(char.isdigit() for char in pw)
         has_special = any(char in "!@#$%^&*()_+={}[\\]|\\:;,.<>?" for char in pw)
         
+        # In password condition, if can use the same error message easier and friendly to the users.
+        # And aslo when create code also comment on the code as well for making sure team members can understand your code process!!!!
         if len(pw) < 8:
             return "Your Password should be more than 8 characters."
         if len(pw) >= 8 and not (has_upper and has_digit and has_special):
@@ -62,46 +64,42 @@ class UserRegistrationSystem:
         if not self.users:
             print("No users registered yet.")
         else:
-            print("Username not found.")
-    except Exception as e:
-        print(f"An error occurred during login: {e}")
-users = {
-    "user1": {
-        "password": hash_password("password123"),
-        "logs": ["Logged in on 2024-12-01"]
-             },
-    "Narak": {
-        "password": hash_password("@Rak1234"),
-        "logs": ["logged in on today"]
-        },
+            print("\n--- Registered Users ---")
+            for index, user in enumerate(self.users, start=1):
+                print(f"{index}.{user}")
 
-    }
-
-def main():
-    while True:
-        try :
-            print("\nMenu:")
-            print("1. Login")
-            print("2. View Logs")
-            print("3. Change Password")
-            print("4. Reset Password")
-            print("5. Exit")
-            choice=int(input("Enter the number:"))
-            if choice == 1 :
-                login()
-            elif choice == 2 :
-                pass
-            elif choice == 3 :
-                pass
-            elif choice == 4 :
-                pass
-            elif choice == 5 :
-                pass
-                break
-            else :
-                print("Invalid choice. Please try again.")
-        except :
-            print("An unexpected error occurred ")
 if __name__ == "__main__":
-    main()    
-    
+    registration_system = UserRegistrationSystem()
+
+    while True:
+        print("\n--- User Regsitration ---")
+        username = input("Enter username:")
+        
+        while True:
+            password = input("Enter password:")
+
+            password_strength = registration_system.check_password(password)
+            print(password_strength)
+
+            if "Password should be more than 8 characters" in password_strength:
+                print("Password is too weak. Please choose a stronger password.")
+            elif "Moderate" in password_strength:
+                print("Password is moderate. Consider improving your password for better security.")
+            else:
+                break
+
+
+            print()
+            
+        confirm_password = input("Confirm your password:")
+
+        if password != confirm_password:
+            print("Passwords do not match. Please try again.")
+            continue
+
+        email = input("Enter email (must contain'@'):")
+
+        if registration_system.register_user(username, password, confirm_password, email):
+            break
+        
+    registration_system.list_users()

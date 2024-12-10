@@ -2,13 +2,23 @@ import hashlib
 from datetime import datetime
 import os
 
-USER_FILE = "user.txt"  # File for user data
-LOG_FILE = "log.txt"    # File for storing login and registration logs
+# Folder for both user data and logs
+DATA_AND_FILES_DIR = "Data and Files"  # Directory for both user data and log files
+
+# Full paths for the user and log files
+USER_FILE = os.path.join(DATA_AND_FILES_DIR, "user.txt")
+LOG_FILE = os.path.join(DATA_AND_FILES_DIR, "logins.txt")
 
 class FileHandler:
     """
     Handles file operations for storing user data and logging activities.
     """
+
+    # Ensure the directory exists
+    @staticmethod
+    def ensure_directory():
+        # Create "Data and Files" directory if it doesn't exist
+        os.makedirs(DATA_AND_FILES_DIR, exist_ok=True)
 
     # ---------- User Management ----------
     @staticmethod
@@ -18,6 +28,7 @@ class FileHandler:
         Returns:
             list: A list of user dictionaries with username, hashed password, and email.
         """
+        FileHandler.ensure_directory()  # Ensure directory exists
         users = []
         if os.path.exists(USER_FILE):
             with open(USER_FILE, "r") as file:
@@ -36,6 +47,7 @@ class FileHandler:
             password (str): Plain-text password to be hashed.
             email (str): User email.
         """
+        FileHandler.ensure_directory()  # Ensure directory exists
         hashed_password = FileHandler.hash_password(password)
         with open(USER_FILE, "a") as file:
             file.write(f"{username}|{hashed_password}|{email}\n")
@@ -72,6 +84,21 @@ class FileHandler:
         Args:
             event_message (str): Description of the event.
         """
+        FileHandler.ensure_directory()  # Ensure directory exists
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         with open(LOG_FILE, "a") as file:
             file.write(f"[{timestamp}] {event_message}\n")
+
+# Example usage:    
+
+# Saving a user
+FileHandler.save_user("Narin", "Narin@#98833995", "narinchhorn@gmail.com")
+
+# Verifying password
+users = FileHandler.load_users()
+user = next((u for u in users if u["username"] == "Narin"), None)
+if user and FileHandler.verify_password("Narin@#98833995", user["password"]):
+    print("Password verified!")
+
+# Logging an event
+FileHandler.log_event("Test event logged.")

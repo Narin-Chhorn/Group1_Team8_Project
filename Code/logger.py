@@ -70,13 +70,15 @@ def view_logs(users, username):
 
 # Function to change password
 def change_password(users, username):
-    try:
-        new_password = input("Enter your new password: ").strip()
-        users[username]["password"] = hash_password(new_password)
-        print("Password updated successfully.")
-        save_users(users)  # Save changes to file
-    except Exception as e:
-        print(f"An error occurred while changing password: {e}")
+    curr_password = input("Enter your current password:")
+    if curr_password == users[username]["password"]:
+        try:
+            new_password = input("Enter your new password: ").strip()
+            users[username]["password"] = hash_password(new_password)
+            print("Password updated successfully.")
+            save_users(users)  # Save changes to file
+        except Exception as e:
+            print(f"An error occurred while changing password: {e}")
 
 # Function to reset password (optional feature)
 def reset_password(users, username):

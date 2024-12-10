@@ -24,12 +24,14 @@ def load_users():
     return users
 
 # Function to save user data back to `users.txt`
+# Function to save user data back to `users.txt`
 def save_users(users):
     with open(USER_DB_FILE, "w") as file:
         for username, data in users.items():
             user_dict = {
                 "username": username,
                 "hashed_password": data["password"],
+                "email": data.get("email", "unknown@example.com"),  # Default email if missing
                 "logs": data["logs"]
             }
             file.write(str(user_dict) + "\n")

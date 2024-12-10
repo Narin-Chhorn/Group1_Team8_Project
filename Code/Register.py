@@ -1,3 +1,4 @@
+from file_handler import FileHandler
 class Register:
     def __init__(self, username, password, email):
         self.username = username
@@ -55,11 +56,19 @@ class UserRegistrationSystem:
                 print("Username already taken.")
                 return False
             
+        # Saved user register to a file 
+        FileHandler.save_user(username, password, email)
+        self.users = FileHandler.load_users() # Reload after saving 
+        FileHandler.log_event(f"User registered: {username}")  # Log the event
+        print(f"Success: User '{username}' registered with email '{email}'.")
+        return True
+        """
         new_user = Register(username, password, email)
         self.users.append(new_user)
         print(f"{new_user.username}, {new_user.email}")
         return True
-
+        """
+    """
     def list_users(self):
         if not self.users:
             print("No users registered yet.")
@@ -67,7 +76,8 @@ class UserRegistrationSystem:
             print("\n--- Registered Users ---")
             for index, user in enumerate(self.users, start=1):
                 print(f"{index}.{user}")
-
+    """
+    
 if __name__ == "__main__":
     registration_system = UserRegistrationSystem()
 

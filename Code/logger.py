@@ -1,4 +1,9 @@
-<<<<<<< HEAD
+import hashlib
+
+# Function to hash passwords
+def hash_password(password):
+    return hashlib.sha256(password.encode()).hexdigest()
+
 class Register:
     def __init__(self, username, password, email):
         self.username = username
@@ -66,15 +71,9 @@ class UserRegistrationSystem:
             print("Username not found.")
     except Exception as e:
         print(f"An error occurred during login: {e}")
-=======
-import hashlib
 
-# Function to hash passwords
-def hash_password(password):
-    return hashlib.sha256(password.encode()).hexdigest()
 
 # User database (in a real-world application, use a secure database)
->>>>>>> 6886349a2ab2e0f317971f3a7f96b0ba83984e10
 users = {
     "user1": {
         "password": hash_password("password123"),
@@ -161,10 +160,7 @@ def menu(username):
 
 # Main program
 if __name__ == "__main__":
-<<<<<<< HEAD
     main()    
     
-=======
     logged_in_user = login()  # Ensure login first
     menu(logged_in_user)      # Show the menu only after successful login
->>>>>>> 6886349a2ab2e0f317971f3a7f96b0ba83984e10

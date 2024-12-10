@@ -12,7 +12,7 @@ users = {
     },
     "Narak": {
         "password": hash_password("@Rak1234"),
-        "logs": ["Logged in on today"]
+        "logs": ["Logged in on 2024-12-8"]
     },
 }
 
@@ -55,6 +55,7 @@ def change_password(username):
     try:
         new_password = input("Enter your new password: ").strip()
         users[username]["password"] = hash_password(new_password)
+        users[username] = new_password
         print("Password updated successfully.")
     except Exception as e:
         print(f"An error occurred while changing password: {e}")

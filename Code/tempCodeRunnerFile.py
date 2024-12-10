@@ -1,0 +1,1 @@
+choice = input("Enter your choice: ").strip()

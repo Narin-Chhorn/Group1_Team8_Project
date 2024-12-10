@@ -7,7 +7,7 @@ def hash_password(password):
 class Register:
     def __init__(self, username, password, email):
         self.username = username
-        self.password = password 
+        self.password = password
         self.email = email
 
     def __str__(self):
@@ -18,8 +18,8 @@ class UserRegistrationSystem:
         self.users = []
 
     def is_valid_username(self, username):
-        return username
-    
+        return username.isalnum()  # Checks that username contains only alphanumeric characters
+
     def is_valid_email(self, email):
         return "@" in email
 
@@ -40,10 +40,10 @@ class UserRegistrationSystem:
             print("Passwords do not match. Please Try Again.") 
             return False
         if not self.is_valid_username(username):
-            print("Invalid username.")
+            print("Invalid username. It should only contain alphanumeric characters.")
             return False
 
-        password_strength = registration_system.check_password(password)
+        password_strength = self.check_password(password)
         print(password_strength)
         if "Your password should be more than 8 characters" in password_strength:
             print("Password is too weak. Please choose a stronger password.")
@@ -61,17 +61,16 @@ class UserRegistrationSystem:
             
         new_user = Register(username, password, email)
         self.users.append(new_user)
-        print(f"{new_user.username}, {new_user.email}")
+        print(f"User registered successfully: {new_user.username}, {new_user.email}")
         return True
 
     def list_users(self):
         if not self.users:
             print("No users registered yet.")
         else:
-            print("Username not found.")
-    except Exception as e:
-        print(f"An error occurred during login: {e}")
-
+            print("Registered Users:")
+            for user in self.users:
+                print(user)
 
 # User database (in a real-world application, use a secure database)
 users = {
@@ -124,7 +123,6 @@ def change_password(username):
     try:
         new_password = input("Enter your new password: ").strip()
         users[username]["password"] = hash_password(new_password)
-        users[username] = new_password
         print("Password updated successfully.")
     except Exception as e:
         print(f"An error occurred while changing password: {e}")
@@ -159,8 +157,25 @@ def menu(username):
             print(f"An unexpected error occurred: {e}")
 
 # Main program
-if __name__ == "__main__":
-    main()    
+def main():
+    user_registration_system = UserRegistrationSystem()
     
-    logged_in_user = login()  # Ensure login first
-    menu(logged_in_user)      # Show the menu only after successful login
+    print("Welcome to the User Registration System!")
+    choice = input("Do you want to register (yes/no)? ").strip().lower()
+    
+    if choice == "yes":
+        username = input("Enter a username: ").strip()
+        password = input("Enter a password: ").strip()
+        confirm_password = input("Confirm password: ").strip()
+        email = input("Enter your email: ").strip()
+        
+        if user_registration_system.register_user(username, password, confirm_password, email):
+            print("Registration successful!")
+        else:
+            print("Registration failed.")
+    else:
+        logged_in_user = login()  # Ensure login first
+        menu(logged_in_user)      # Show the menu only after successful login
+
+if __name__ == "__main__":
+    main()

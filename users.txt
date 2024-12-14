@@ -1,0 +1,8 @@
+User Information:
+    Username       : Narin
+    Password Hash  : 429f7948ae1536761ee74e85d160dc03af62ae4817dfca1209d9075b2bf54798
+    Email          : narin@gmail.com
+    Date of Birth  : 2004-12-28
+    Encrypted PIN  : gAAAAABnXadq5KuGY2ouJ-RDtOEwINe4mqRHCwuWVeDYDeS4cCiVm1-G0g5xhHJPjcC1DVLZH3K1Ia1Qucfrwt6eyF7LysNDAA==
+    Phone Number   : 098833995
+----------------------------------------

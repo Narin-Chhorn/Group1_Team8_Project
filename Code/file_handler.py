@@ -3,7 +3,7 @@ from datetime import datetime
 import os
 
 # Folder for both user data and logs
-DATA_AND_FILES_DIR = "Data and Files"  # Directory for both user data and log files
+DATA_AND_FILES_DIR = "DATA_AND_FILES"  # Directory for both user data and log files
 
 # Full paths for the user and log files
 USER_FILE = os.path.join(DATA_AND_FILES_DIR, "user.txt")

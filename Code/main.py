@@ -1,4 +1,3 @@
-# This will be where all the code put together.
 import hashlib
 from datetime import datetime
 from cryptography.fernet import Fernet  # type: ignore

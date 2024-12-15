@@ -88,17 +88,3 @@ class FileHandler:
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         with open(LOG_FILE, "a") as file:
             file.write(f"[{timestamp}] {event_message}\n")
-
-# Example usage:    
-
-# Saving a user
-FileHandler.save_user("Narin", "Narin@#98833995", "narinchhorn@gmail.com")
-
-# Verifying password
-users = FileHandler.load_users()
-user = next((u for u in users if u["username"] == "Narin"), None)
-if user and FileHandler.verify_password("Narin@#98833995", user["password"]):
-    print("Password verified!")
-
-# Logging an event
-FileHandler.log_event("Test event logged.")

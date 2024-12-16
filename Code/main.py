@@ -1,6 +1,7 @@
 import hashlib
 from datetime import datetime
 from cryptography.fernet import Fernet  # type: ignore
+from colorama import init, Fore, Style
 
 USER_DB_FILE = "users.txt"
 MAX_ATTEMPTS = 3  # Maximum allowed attempts before locking the account
@@ -371,6 +372,12 @@ def main():
     users = load_users()
 
     while True:
+        print(Fore.YELLOW + Style.BRIGHT + "=" * 50)
+        print(Fore.YELLOW + Style.BRIGHT + "        Welcome to SecureGate v1.0")
+        print(Fore.YELLOW + Style.BRIGHT + "   Your Secure Authentication System 🚀")
+        print(Fore.YELLOW + Style.BRIGHT + "=" * 50)
+
+        print(Fore.BLUE + Style.BRIGHT + "\n\n==== *Main Menu* ====")
         print("\n1. Register")
         print("2. Login")
         print("3. Admin Menu")
@@ -379,25 +386,25 @@ def main():
 
         if choice == "1":
             while True:
-                print("\n--- User Registration ---")
+                print(Fore.BLUE + Style.BRIGHT + "\n--- User Registration ---")
                 
-                username = input("Enter username: ")
+                username = input(Fore.BLUE + Style.BRIGHT + "Enter username: ")
                 if " " in username or not registration_system.is_valid_username(username):
-                    print("Invalid username. Please try again.")
+                    print(Fore.RED + Style.BRIGHT + "Invalid username. Please try again.")
                     continue
 
-                password = input("Enter password: ")
+                password = input(Fore.BLUE + Style.BRIGHT + "Enter password: ")
                 password_strength = registration_system.check_password(password)
-                if password_strength != "Your Password is Strong.":
+                if password_strength != Fore.BLUE + Style.BRIGHT + "Your Password is Strong.":
                     print(password_strength)
                     continue
 
                 confirm_password = input("Confirm your password: ")
                 if password != confirm_password:
-                    print("Passwords do not match. Please try again.")
+                    print(Fore.RED + Style.BRIGHT + "Passwords do not match. Please try again.")
                     continue
 
-                email = input("Enter email: ")
+                email = input(Fore.BLUE + Style.BRIGHT + "Enter email: ")
                 if not registration_system.is_valid_email(email):
                     print("Invalid email address. Must end with @gmail.com.")
                     continue
@@ -418,11 +425,11 @@ def main():
             admin_menu(users)
 
         elif choice == "4":
-            print("Goodbye!")
+            print(Fore.GREEN + Style.BRIGHT + "Goodbye!")
             break
 
         else:
-            print("Invalid choice. Please try again.")
+            print(Fore.RED + Style.BRIGHT + "Invalid choice. Please try again.")
 
 if __name__ == "__main__":
     main()

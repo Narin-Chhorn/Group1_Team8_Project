@@ -1,6 +1,7 @@
 import hashlib
 from datetime import datetime
 from cryptography.fernet import Fernet  # type: ignore
+from colorama import Fore, init, Style
 
 USER_DB_FILE = "users.txt"
 MAX_ATTEMPTS = 3  # Maximum allowed attempts before locking the account
@@ -371,6 +372,10 @@ def main():
     users = load_users()
 
     while True:
+        print(Fore.YELLOW + Style.BRIGHT + "=" * 50)
+        print(Fore.YELLOW + Style.BRIGHT + "        Welcome to SecureGate v1.0")
+        print(Fore.YELLOW + Style.BRIGHT + "   Your Secure Authentication System 🚀")
+        print(Fore.YELLOW + Style.BRIGHT + "=" * 50)
         print("\n1. Register")
         print("2. Login")
         print("3. Admin Menu")

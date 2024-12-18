@@ -2,25 +2,16 @@ import hashlib
 from datetime import datetime
 import os
 
-# Folder for both user data and logs
-DATA_AND_FILES_DIR = "DATA_AND_FILES"  # Directory for both user data and log files
-
-# Full paths for the user and log files
-USER_FILE = os.path.join(DATA_AND_FILES_DIR, "user.txt")
-LOG_FILE = os.path.join(DATA_AND_FILES_DIR, "logins.txt")
+USER_FILE = "user.txt"
+LOG_FILE = "logins.txt"
 
 class FileHandler:
     """
     Handles file operations for storing user data and logging activities.
     """
 
-    # Ensure the directory exists
-    @staticmethod
-    def ensure_directory():
-        # Create "Data and Files" directory if it doesn't exist
-        os.makedirs(DATA_AND_FILES_DIR, exist_ok=True)
-
     # ---------- User Management ----------
+
     @staticmethod
     def load_users():
         """
@@ -28,29 +19,37 @@ class FileHandler:
         Returns:
             list: A list of user dictionaries with username, hashed password, and email.
         """
-        FileHandler.ensure_directory()  # Ensure directory exists
         users = []
         if os.path.exists(USER_FILE):
             with open(USER_FILE, "r") as file:
                 for line in file:
                     parts = line.strip().split("|")
-                    if len(parts) == 3:
-                        users.append({"username": parts[0], "password": parts[1], "email": parts[2]})
+                    if len(parts) == 6:
+                        users.append({
+                            "username": parts[0],
+                            "password": parts[1],
+                            "email": parts[2],
+                            "dob": parts[3],
+                            "pin": parts[4],
+                            "phone": parts[5]
+                        })
         return users
 
     @staticmethod
-    def save_user(username, password, email):
+    def save_user(username, password, email, dob, pin, phone):
         """
         Save a new user to the user file.
         Args:
             username (str): Username.
             password (str): Plain-text password to be hashed.
             email (str): User email.
+            dob (str): Date of birth.
+            pin (str): Encrypted PIN.
+            phone (str): Phone number.
         """
-        FileHandler.ensure_directory()  # Ensure directory exists
         hashed_password = FileHandler.hash_password(password)
         with open(USER_FILE, "a") as file:
-            file.write(f"{username}|{hashed_password}|{email}\n")
+            file.write(f"{username}|{hashed_password}|{email}|{dob}|{pin}|{phone}\n")
         FileHandler.log_event(f"User registered: {username}")
 
     @staticmethod
@@ -77,6 +76,7 @@ class FileHandler:
         return FileHandler.hash_password(input_password) == stored_hashed_password
 
     # ---------- Logging ----------
+
     @staticmethod
     def log_event(event_message):
         """
@@ -84,7 +84,16 @@ class FileHandler:
         Args:
             event_message (str): Description of the event.
         """
-        FileHandler.ensure_directory()  # Ensure directory exists
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         with open(LOG_FILE, "a") as file:
             file.write(f"[{timestamp}] {event_message}\n")
+    
+    @staticmethod
+    def read_logs():
+        """
+        Read all logged events from the log file.
+        Returns:
+            list: List of log entries.
+        """
+        with open(LOG_FILE, "r") as file:
+            return file.readlines()

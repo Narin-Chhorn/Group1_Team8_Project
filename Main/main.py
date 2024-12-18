@@ -161,7 +161,7 @@ class UserRegistrationSystem:
 
                 confirm_password = input("Confirm your password: ").strip()
                 if password != confirm_password:
-                    raise ValueError("Passwords do not match.")
+                    raise ValueError(Fore.RED + "Passwords do not match.")
 
                 dob = self.get_dob()
                 pin = self.verify_pin()
@@ -186,33 +186,33 @@ class UserRegistrationSystem:
         try:
             # Check for password confirmation
             if password != confirm_password:
-                raise ValueError("Passwords do not match. Please try again.")
+                raise ValueError(Fore.RED + "Passwords do not match. Please try again.")
             
             # Validate username
             if not self.is_valid_username(username):
-                raise ValueError("Invalid username. Please use only alphabetic characters.")
+                raise ValueError(Fore.RED + "Invalid username. Please use only alphabetic characters.")
             
             # Validate email
             if not self.is_valid_email(email):
-                raise ValueError("Invalid email address. Please enter a valid email ending with @gmail.com.")
+                raise ValueError(Fore.RED + "Invalid email address. Please enter a valid email ending with @gmail.com.")
 
             # Check for existing username
             for user in self.users:
                 if user.username == username:
-                    raise ValueError("Username already taken. Please choose another one.")
+                    raise ValueError(Fore.RED + "Username already taken. Please choose another one.")
 
             # Hash the password and encrypt the PIN
             try:
                 password_hash = self.hash_password(password)
                 encrypted_pin = self.encrypt_pin(pin)  # Encrypt PIN securely
             except Exception as e:
-                raise Exception(f"Encryption error: {e}")
+                raise Exception(Fore.RED + f"Encryption error: {e}")
 
             # Create and save the new user
             new_user = Register(username, password_hash, email, dob, encrypted_pin, phone)
             self.users.append(new_user)
             self.save_users()
-            print(f"Registration successful for {new_user.username}.")
+            print(Fore.GREEN + f"Registration successful for {new_user.username}.")
             return True
 
         except ValueError as ve:
@@ -329,7 +329,7 @@ def login(users):
         user = users[username]
 
         if user["locked"]:
-            print("Your account is locked due to too many failed login attempts. Please try again later.")
+            print(Fore.RED + "Your account is locked due to too many failed login attempts. Please try again later.")
             return None
 
         password = input("Enter your password: ").strip()
@@ -401,7 +401,7 @@ def change_password(users, username):
             print("Password updated successfully.")
             save_users(users)  # Save changes to file
         except Exception as e:
-            print(f"An error occurred while changing password: {e}")
+            print(Fore.RED + f"An error occurred while changing password: {e}")
 
 class AdminManagementSystem:
     def __init__(self, admin_file="admins.txt", user_file="users.txt"):
@@ -499,10 +499,10 @@ class AdminManagementSystem:
         password = input("Enter admin password: ").strip()
 
         if Admin.verify_password(admin.hashed_password, password):
-            print("Admin login successful!")
+            print(Fore.GREEN + "Admin login successful!")
             return True
         else:
-            print("Incorrect password.")
+            print(Fore.RED + "Incorrect password.")
             return False
 
     def admin_menu(self):
@@ -531,7 +531,7 @@ class AdminManagementSystem:
                 print("Exiting Admin Menu.")
                 break
             else:
-                print("Invalid choice. Please try again.")
+                print(Fore.RED + "Invalid choice. Please try again.")
 
 
     def view_users(self):
